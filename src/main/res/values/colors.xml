@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- game launcher primary button bg color -->
+    <color name="game_fab_bg">#DAB867</color>
+    <!-- pin lock -->
+    <color name="pin_number_pad">@color/game_fab_bg</color>
+    <color name="white">#FFFFFF</color>
+</resources>

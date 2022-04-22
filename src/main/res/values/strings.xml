@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- PIN -->
+    <bool name="pin_lock_enabled">false</bool>
+    <string name="pin_lock_screen" tools:ignore="MissingTranslation">锁屏密码</string>
+    <string name="pin_create" tools:ignore="MissingTranslation">创建锁屏密码。</string>
+    <string name="pin_confirm" tools:ignore="MissingTranslation">确认锁屏密码。</string>
+    <string name="pin_enter" tools:ignore="MissingTranslation">输入锁屏密码。</string>
+    <string name="pin_incorrect" tools:ignore="MissingTranslation">密码不正确。请重新输入。</string>
+    <string name="pin_incorrect_new" tools:ignore="MissingTranslation">新锁屏密码不正确，请重新输入。</string>
+
+    <string name="pin_confirm_old" tools:ignore="MissingTranslation">输入旧锁屏密码。</string>
+    <string name="pin_confirm_new" tools:ignore="MissingTranslation">输入新锁屏密码。</string>
+    <string name="pin_confirm_verify" tools:ignore="MissingTranslation">确认新锁屏密码。</string>
+    <string name="pin_confirm_old_incorrect" tools:ignore="MissingTranslation">旧锁屏密码不正确，请重新输入。</string>
+
+    <string name="pin_forgot_alert" tools:ignore="MissingTranslation">如您忘记锁屏密码请重置账号密码。重置账号密码成功后请查收邮件</string>
+    <string name="pin_forgot_button_text" tools:ignore="MissingTranslation">忘记锁屏密码？</string>
+    <string name="pin_forgot_button_cancel" tools:ignore="MissingTranslation">取消设置</string>
+
+    <string name="pin_attempts_text" tools:ignore="MissingTranslation">其余尝试: </string>
+</resources>
