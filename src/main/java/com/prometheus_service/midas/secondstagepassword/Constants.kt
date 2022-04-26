@@ -5,7 +5,6 @@ class Constants {
     companion object{
         const val PIN_PREFERENCE = "PinPrefs"
 
-        //Pin Lock Intent Extra Keys
         const val EXTRA_KEY_PIN_STATE = "pinLockState"
 
         const val KEY_PIN_CMSBO_ENABLED = "pinCmsboEnabled"
@@ -13,5 +12,8 @@ class Constants {
         const val KEY_PIN_ENABLED = "pinEnabled"
         const val KEY_IS_LOGGED_IN = "isLoggedIn"
         const val KEY_STORED_CREDENTIALS = "storedCredentials"
+
+        const val PINLOCK_TAG = "pinlock_fragment"
+
     }
 }

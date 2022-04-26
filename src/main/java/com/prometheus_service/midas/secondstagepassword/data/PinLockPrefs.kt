@@ -1,13 +1,15 @@
-package com.prometheus_service.midas.secondstagepassword
+package com.prometheus_service.midas.secondstagepassword.data
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
-import com.prometheus_service.midas.secondstagepassword.Constants.Companion.KEY_IS_LOGGED_IN
 import com.prometheus_service.midas.secondstagepassword.Constants.Companion.KEY_MEMBER_PIN
 import com.prometheus_service.midas.secondstagepassword.Constants.Companion.KEY_PIN_CMSBO_ENABLED
 import com.prometheus_service.midas.secondstagepassword.Constants.Companion.KEY_PIN_ENABLED
 import com.prometheus_service.midas.secondstagepassword.Constants.Companion.KEY_STORED_CREDENTIALS
 
+@SuppressLint("CommitPrefEdits")
 class PinLockPrefs(private val prefs: SharedPreferences) {
+
 
     fun setPinCmsboEnabled(enabled: Boolean) {
         prefs.edit().putBoolean(KEY_PIN_CMSBO_ENABLED, enabled).apply()
@@ -35,14 +37,6 @@ class PinLockPrefs(private val prefs: SharedPreferences) {
 
     fun deletePin() {
         prefs.edit().remove(KEY_MEMBER_PIN).apply()
-    }
-
-    fun setLoggedIn(loggedIn: Boolean) {
-        prefs.edit().putBoolean(KEY_IS_LOGGED_IN, loggedIn).apply()
-    }
-
-    fun isLoggedIn(): Boolean {
-        return prefs.getBoolean(KEY_IS_LOGGED_IN, false)
     }
 
     fun setStoredCredentials(data: String?) {

@@ -1,11 +1,15 @@
 package com.prometheus_service.midas.secondstagepassword.utils
 
 import android.util.Base64
+import android.util.Log
+import com.prometheus_service.midas.secondstagepassword.data.PinLockPrefs
+import org.json.JSONException
+import org.json.JSONObject
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
-internal object PinLockUtils {
+object PinLockUtils {
 
     private const val CIPHER_KEY_LEN = 16 //128 bits
     const val TRANSFORMATION = "AES/CBC/PKCS5PADDING"
@@ -72,5 +76,25 @@ internal object PinLockUtils {
 
     private fun initVector(clientSecret: String): String {
         return clientSecret.substring(0, 16)
+    }
+
+    fun setCmsboPinEnabled(jsonObject: String, prefs: PinLockPrefs) {
+        try {
+            val dataObj = JSONObject(jsonObject)
+            prefs.setPinCmsboEnabled(dataObj.getBoolean("secondStagePassword"))
+        } catch (e: JSONException) {
+            Log.e(PinLockUtils::class.java.name, e.localizedMessage)
+        }
+    }
+
+    fun isPinLockActive(isPWAReady: Boolean?, isLoggedIn : Boolean, prefs: PinLockPrefs): Boolean {
+        val isPwaReady = isPWAReady ?: false
+
+        val isPinCmsboEnabled = prefs.isPinCmsboEnabled()
+        val isPinEnabled = prefs.isPinEnabled()
+        val savedPin = prefs.getPin()
+        val isPinSaved = (savedPin?.isNotEmpty() ?: false) && (savedPin?.isNotBlank() ?: false)
+
+        return (isPwaReady && isLoggedIn && isPinCmsboEnabled && isPinEnabled && isPinSaved)
     }
 }

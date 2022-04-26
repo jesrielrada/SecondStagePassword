@@ -15,6 +15,8 @@ import androidx.lifecycle.Observer
 import com.poovam.pinedittextfield.CirclePinField
 import com.poovam.pinedittextfield.PinField
 import com.prometheus_service.midas.secondstagepassword.*
+import com.prometheus_service.midas.secondstagepassword.data.PinLockPrefs
+import com.prometheus_service.midas.secondstagepassword.data.PinlockData
 import kotlinx.android.synthetic.main.fragment_pin_lock.*
 
 class SecondStagePasswordFragment :
@@ -44,6 +46,7 @@ class SecondStagePasswordFragment :
 
     lateinit var callback: SecondStageFragmentCallback
     lateinit var translations: PinLockTranslations
+    lateinit var pinlockData: PinlockData
 
     lateinit var operatorId: String
     lateinit var pinLockPin: String
@@ -73,13 +76,27 @@ class SecondStagePasswordFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // set default state to pin creation
+        var state: PinLockState = PinLockState.DisplayCreatePin
+
+        // set state from intent
+        if (arguments?.containsKey(Constants.EXTRA_KEY_PIN_STATE) == true) {
+            state = arguments?.getSerializable(Constants.EXTRA_KEY_PIN_STATE) as PinLockState
+        }
+
+        if (arguments?.containsKey("PinlockTranslations") == true) {
+            translations = arguments?.getSerializable("PinlockTranslations") as PinLockTranslations
+        }
+
+        if (arguments?.containsKey("PinlockData") == true) {
+            pinlockData = arguments?.getSerializable("PinlockData") as PinlockData
+        }
+
         initializeViews()
 
-        callback.initTranslations(translations)
-
-        operatorId = ""
-        pinLockPin = ""
-        clientSecret = ""
+        operatorId = pinlockData.operatorId
+        pinLockPin = pinlockData.pin
+        clientSecret = pinlockData.clientSecret
 
         // init pin input observer
         mViewModel.pinInput.observe(viewLifecycleOwner, PinObserver())
@@ -87,15 +104,13 @@ class SecondStagePasswordFragment :
         mViewModel.pinInput.value = mViewModel.getPin(operatorId, pinLockPin, clientSecret)
         // init pin lock state observer
         mViewModel.pinLockState.observe(viewLifecycleOwner, PinStateObserver())
-        // set default state to pin creation
-        var state: PinLockState = PinLockState.DisplayCreatePin
 
-        if (arguments?.containsKey(Constants.EXTRA_KEY_PIN_STATE) == true) {
-            // set state from intent
-            state = arguments?.getSerializable(Constants.EXTRA_KEY_PIN_STATE) as PinLockState
-        }
         mViewModel.setPinLockState(state)
 
+    }
+
+    fun initializeChangedTranslations(pinLockTranslations: PinLockTranslations){
+        translations = pinLockTranslations
     }
 
     private fun initializeViews() {
@@ -154,8 +169,7 @@ class SecondStagePasswordFragment :
                 if (view is ImageView) {
                     mCircleField.setText(mCircleField.text?.dropLast(1))
                 } else if (view is TextView) {
-                    // num pad clicked
-                    // append text to current pin input
+                    // num pad clicked, append text to current pin input
                     mCircleField.text?.append(view.text)
                 }
             }
@@ -232,7 +246,6 @@ class SecondStagePasswordFragment :
                     mRemainingAttemptsCount
                 )
             }
-
         }
     }
 
@@ -270,11 +283,11 @@ class SecondStagePasswordFragment :
         mCircleField.text?.clear()
     }
 
-    private fun removeFragment() {
+    fun removeFragment() {
         // re-init try count
         mRemainingAttemptsCount = MAX_ATTEMPTS
         mTryCount = INITIAL_TRY_COUNT
-        callback.onRemoveFragment()
+        callback.onRemoveSecondStageFragment()
     }
 
 

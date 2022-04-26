@@ -1,5 +1,7 @@
 package com.prometheus_service.midas.secondstagepassword
 
+import java.io.Serializable
+
 data class PinLockTranslations(
     val pinLockScreenHeader: String,
     val pinLockCreate: String,
@@ -15,4 +17,4 @@ data class PinLockTranslations(
     val pinLockForgotButton: String,
     val pinLockCancelButton: String,
     val pinLockAttempts: String
-)
+) : Serializable

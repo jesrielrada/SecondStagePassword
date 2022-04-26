@@ -3,11 +3,15 @@ package com.prometheus_service.midas.secondstagepassword.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.prometheus_service.midas.secondstagepassword.PinLockPrefs
+import com.prometheus_service.midas.secondstagepassword.data.PinLockPrefs
 import com.prometheus_service.midas.secondstagepassword.PinLockState
 import com.prometheus_service.midas.secondstagepassword.utils.PinLockUtils
 
 class SecondStagePasswordViewModel : ViewModel() {
+
+    companion object{
+        private val TAG = SecondStagePasswordViewModel::class.java.name
+    }
 
     private var mPinLockState: MutableLiveData<PinLockState> = MutableLiveData()
 
